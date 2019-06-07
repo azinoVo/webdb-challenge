@@ -150,5 +150,107 @@ server.get('/api/actions', (req, res) => {
 
 //---------------------------------------------------------------------------------//
 
+server.put('/api/projects/:id', (req, res) => {
+
+    db('projects')
+    .where({ id: req.params.id })
+    .update(req.body)
+    .then((count) => {
+        if (count > 0) {
+            // return the count or the newly updated from database
+            db('projects').where({ id: req.params.id }).first().then((project) => {
+                res.status(200).json({ project });
+            });
+        } else {
+            res.status(500).json({ message: 'Project not found!' });
+        }
+    })
+    .catch((err) => {
+        res.status(500).json(err);
+    });
+
+});
+
+
+//---------------------------------------------------------------------------------//
+
+
+server.put('/api/actions/:id', (req, res) => {
+    const {name, description, notes} = req.body;
+    const edit = {
+        name: name,
+        description: description,
+        notes: notes
+    }
+
+    db('actions')
+    .where({ id: req.params.id })
+    .update(edit)
+    .then((count) => {
+        if (count > 0) {
+            // return the count or the newly updated from database
+            db('actions').where({ id: req.params.id }).first().then((action) => {
+                res.status(200).json({ action });
+            });
+        } else {
+            res.status(500).json({ message: 'Action not found!' });
+        }
+    })
+    .catch((err) => {
+        res.status(500).json(err);
+    });
+
+});
+
+
+//---------------------------------------------------------------------------------//
+
+
+
+server.delete('/api/projects/:id', (req, res) => {
+
+    db('projects')
+    .where({ id: req.params.id })
+    .del()
+    .then((count) => {
+        if (count > 0) {
+            res.status(200).json({ message: 'Destruction Imminent.' });
+        } else {
+            res.status(404).json({ message: 'Project not found!' });
+        }
+    })
+    .catch((err) => {
+        res.status(500).json(err);
+    });
+
+});
+
+
+//---------------------------------------------------------------------------------//
+
+
+
+server.delete('/api/actions/:id', (req, res) => {
+
+    db('actions')
+    .where({ id: req.params.id })
+    .del()
+    .then((count) => {
+        if (count > 0) {
+            res.status(200).json({ message: 'Destruction Imminent.' });
+        } else {
+            res.status(404).json({ message: 'Action not found!' });
+        }
+    })
+    .catch((err) => {
+        res.status(500).json(err);
+    });
+});
+
+
+//---------------------------------------------------------------------------------//
+
+
+
 const port = process.env.PORT || 8000;
 server.listen(port, () => console.log(`\n** API running on http://localhost:${port} **\n`));
