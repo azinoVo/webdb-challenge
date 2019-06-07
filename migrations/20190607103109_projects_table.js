@@ -9,9 +9,12 @@ exports.up = function(knex, Promise) {
         .notNullable()
         .unique();
     tbl
-        .text('description');
+        .text('description')
+        .notNullable();
     tbl
-        .boolean('completed_project');
+        .boolean('completed_project')
+        .notNullable()
+        .defaultTo(false);
   })
 
   .createTable('actions', tbl => {
@@ -22,11 +25,15 @@ exports.up = function(knex, Promise) {
         .notNullable()
         .unique();
     tbl
-        .text('description');
+        .text('description')
+        .notNullable();
     tbl
-        .text('notes');
+        .text('notes')
+        .notNullable();
     tbl
-        .boolean('completed_action');
+        .boolean('completed_action')
+        .notNullable()
+        .defaultTo(false);
     tbl
         .integer('project_id')
         .unsigned()
@@ -35,7 +42,6 @@ exports.up = function(knex, Promise) {
         .inTable('projects')
         .onDelete('RESTRICT') // explain how cascading works
         .onUpdate('CASCADE');
-    
   })
 };
 
