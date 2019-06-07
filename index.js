@@ -54,19 +54,19 @@ server.post('/api/projects', (req, res) => {
 
 server.post('/api/actions/:id', (req, res) => {
     const {name, description, notes} = req.body;
-    // const {project_id} = req.params;
-    // const action = {
-    //     name: name,
-    //     description: description,
-    //     notes: notes,
-    //     project_id: project_id,
-    // }
+    const {id} = req.params;
+    const action = {
+        name: name,
+        description: description,
+        notes: notes,
+        project_id: id
+    }
 
     if (!name || !description || !notes) {
         res.status(500).json({message: "Please provide name, description, and/or notes."})
     } else {
         db('actions')
-        .insert(req.body)
+        .insert(action)
 		.then((ids) => {
 			const [ id ] = ids;
 
