@@ -60,7 +60,6 @@ server.post('/api/actions/:id', (req, res) => {
     //     description: description,
     //     notes: notes,
     //     project_id: project_id,
-    //     completed_action: true
     // }
 
     if (!name || !description || !notes) {
@@ -148,17 +147,6 @@ server.get('/api/actions', (req, res) => {
     })
 });
 
-
-
-//---------------------------------------------------------------------------------//
-
-
-// Middleware
-//---------------------------------------------------------------------------------//
-
-function checkFields (req, res, next) {
-    const {} = req.body;
-}
 
 //---------------------------------------------------------------------------------//
 
