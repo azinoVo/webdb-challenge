@@ -104,7 +104,7 @@ server.get('/api/projects/:id/actions', (req, res) => {
                 console.log(action)
                 
                 if (action.length > 0) {
-                    res.status(200).json(action)
+                    res.status(200).json({project, action})
                 } else {
                     res.status(404).json({ message: 'No actions with that id exists.' });
                 }
